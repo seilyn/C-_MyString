@@ -18,7 +18,7 @@ String::String(const char* s)
 	string_data = new char[string_len];
 	capacity_len = string_len;
 
-	for (int i = 0; i != string_len; i++) // 
+	for (int i = 0; i != string_len; i++) 
 	{
 		string_data[i] = s[i];
 	}
@@ -85,13 +85,97 @@ String& String::append(const String& str)
 	string_len += str.string_len;
 	return (*this);
 }
-String
+String& String::append(const char* s)
+{
+	String str(s);
+	return append(str);
+}
 
 // 2021-05-10
+
+// 2021-05-11
+String& String::operator=(const String& str)
+{
+	delete[] string_data;
+	string_len = str.string_len;
+	string_data = new char[string_len];
+	
+	for (int i = 0; i != string_len; i++) // strcpy 
+	{
+		string_data[i] = str.string_data[i];
+	}
+	return (*this);
+}
+
+String& String::operator=(const char* s)
+{
+	string_len = 0;
+	for (int i = 0; s[i] != '\0'; i++)
+	{
+		string_len++; // char* s¿« length
+	}
+	string_data = new char[string_len + 1];
+	for (int i = 0; i < string_len; i++)
+	{
+		string_data[i] = s[i];
+	}
+	return (*this);
+}
+
+String& String::operator+=(const String& str)
+{
+	char* string_data_temp; 
+	string_data_temp = new char[string_len + str.string_len];
+
+	for (int i = 0; i != string_len; i++)
+	{
+		string_data_temp[i] = string_data[i];
+	}
+	for (int i = 0; i != str.string_len; i++)
+	{
+		string_data_temp[i + string_len] = str.string_data[i];
+	}
+	delete[] string_data;
+	string_data = string_data_temp;
+	string_len = string_len + str.string_len;
+
+	return (*this);
+}
+
+String& String::operator+=(const char* s)
+{
+	int temp_len = 0;
+	char* string_temp_s;
+	for (int i = 0; s[i] != '\0'; i++)
+	{
+		temp_len++;
+	}
+	string_temp_s = new char[string_len + temp_len + 1];
+	for (int i = 0; i != string_len; i++)
+	{
+		string_temp_s[i] = string_data[i];
+	}
+	for (int i = 0; i != temp_len; i++)
+	{
+		string_temp_s[i + string_len] = s[i];
+	}
+	string_data = string_temp_s;
+	string_len += temp_len;
+
+	return (*this);
+}
 
 String::~String()
 {
 	delete[] string_data;
+}
+
+char& String::operator[](int index)
+{
+	if (index > string_len) return string_data[string_len - 1];
+	// else if (index < 0) return;
+
+	return string_data[index];
 }
 
 void String::Print()
