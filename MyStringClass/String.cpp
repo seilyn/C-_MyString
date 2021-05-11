@@ -85,7 +85,7 @@ String& String::append(const String& str)
 	string_len += str.string_len;
 	return (*this);
 }
-
+String
 
 // 2021-05-10
 
