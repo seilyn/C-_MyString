@@ -18,14 +18,14 @@ public:
 	String& operator=(const String& str);
 	String& operator=(const char* s);
 
-	void Print();
+	const char print(bool show = true);
+	// void Print();
 	int length();
 	int capacity();
 	int size();
 
 	char& operator[](int index);
 	void shrink_to_fit();
-
 private:
 	char* string_data; // 문자열의 데이터를 가리키는 pointer 변수
 	int string_len; // 문자열의 길이

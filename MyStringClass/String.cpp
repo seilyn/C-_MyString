@@ -5,6 +5,7 @@ String::String()
 {
 	string_len = 0;
 	string_data = NULL;
+	capacity_len = 0;
 }
 
 String::String(const char* s)
@@ -35,11 +36,11 @@ String::String(const String& s)
 		string_data[i] = s.string_data[i];
 	}
 }
-// 2021-05-10 추가된부분
+
 String& String::assign(const String& str)
 {
-	if (str.string_len > string_len) { // 새로운 문자열이 기존 문자열보다 더 크기가 크면 
-		delete[] string_data;          // 지우고 다시 할당
+	if (str.string_len > string_len) { 
+		string_len = str.string_len;       
 		string_data = new char[str.string_len]; 
 	} 
 	for (int i = 0; i != string_len; i++)
@@ -59,7 +60,8 @@ String& String::assign(const char* str)
 	}
 	if (string_len > capacity_len) // 재할당
 	{
-		delete[] string_data;
+		capacity_len = string_len;
+		string_data = new char[capacity_len];
 	}
 	for (int i = 0; i != string_len; i++)
 	{
@@ -146,7 +148,7 @@ String& String::operator+=(const char* s)
 {
 	int temp_len = 0;
 	char* string_temp_s;
-	for (int i = 0; s[i] != '\0'; i++)
+	for (int i = 0; s[i] != '\0'; i++) // strcpy 
 	{
 		temp_len++;
 	}
@@ -172,20 +174,44 @@ String::~String()
 
 char& String::operator[](int index)
 {
-	if (index > string_len) return string_data[string_len - 1];
-	// else if (index < 0) return;
-
-	return string_data[index];
-}
-
-void String::Print()
-{
-	for (int i = 0; i != string_len; i++)
+	try
 	{
-		std::cout << string_data[i];
+		if (index >= string_len || index < 0)
+		{
+			if (index < 0) index = 0;
+			else throw ("Error: Out of Bound");
+		}
+		else return string_data[index];
 	}
-	std::cout << std::endl;
+	catch (const char* st)
+	{
+		std::cout << st;
+	}
 }
+
+const char String::print(bool show) // 수정한 print 함수
+{
+	if (show == true)
+	{
+		for (int i = 0; i != string_len; i++)
+		{
+			std::cout << string_data[i];
+		}
+		std::cout << std::endl;
+	}
+	else if (show == false) return 0;
+
+	return *string_data;
+}
+
+//void String::Print() 
+//{
+//	for (int i = 0; i != string_len; i++)
+//	{
+//		std::cout << string_data[i];
+//	}
+//	std::cout << std::endl;
+//}
 
 int String::length()
 {
@@ -200,4 +226,20 @@ int String::capacity()
 int String::size() // 크기
 {
 	return (char*)(&string_data + 1) - (char*)(&string_data);
+}
+void String::shrink_to_fit()
+{
+	if (capacity_len > string_len)
+	{
+		char* string_data_temp;
+
+		capacity_len = string_len;
+		string_data_temp = new char[capacity_len];
+		for (int i = 0; i != string_len; i++)
+		{
+			string_data_temp[i] = string_data[i];
+		}
+		string_data = string_data_temp;
+		string_len = capacity_len;
+	}
 }
