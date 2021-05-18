@@ -11,6 +11,14 @@ int main()
 	String string6("ABCD");
 	String string7;
 	String string8 = "";
+	String string9("apple");
+	string1 = string2;
+	String string10 = string1 + string1;
+	String string11("Apple");
+	String string12("is red");
+	String string13 = string11 + string12;
+	String string14("hello");
+	String string15;
 
 	std::cout << "==== String 1 ====" << std::endl;
 	std::cout << "capacity() Test : " << string1.capacity() << std::endl;
@@ -50,5 +58,12 @@ int main()
 	string7.shrink_to_fit();
 	string7.capacity();
 	
+	string10.print();
+	string13.print();
+
+	std::cout << "<cout 오버로딩 테스트> : " << string14 << std::endl;
+	std::cout << "<cin 입력 테스트 >";
+	std::cin >>string15;
+	string15.print();
 	return 0;
 }

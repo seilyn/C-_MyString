@@ -1,5 +1,5 @@
 #pragma once
-
+#include <iostream>
 class String
 {
 public:
@@ -18,6 +18,14 @@ public:
 	String& operator=(const String& str);
 	String& operator=(const char* s);
 
+	//String 3 Level
+	String operator+(const String& str);
+	String operator+(const char* s);
+	friend std::ostream& operator<<(std::ostream& os, const String& str);
+	friend std::istream& operator>>(std::istream& is, String& str);
+	
+	////////////////
+
 	const char print(bool show = true);
 	// void Print();
 	int length();
@@ -26,6 +34,7 @@ public:
 
 	char& operator[](int index);
 	void shrink_to_fit();
+
 private:
 	char* string_data; // 문자열의 데이터를 가리키는 pointer 변수
 	int string_len; // 문자열의 길이
