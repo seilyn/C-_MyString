@@ -1,63 +1,39 @@
 #include "String.h"
 #include <iostream>
-#include <cassert>
+
+#pragma region 생성자 & 소멸자
 String::String()
 {
-	string_len = 0;
-	string_data = NULL;
-	capacity_len = 0;
+	this->init();
 }
 
 String::String(const char* s)
 {
-	int len = 0;
-	for (int i = 0; s[i] != '\0'; i++) 
-	{
-		len++;
-	}
-	string_len = len; 
-	string_data = new char[string_len + 1];
-	capacity_len = string_len;
-
-	for (int i = 0; i != string_len; i++) 
-	{
-		string_data[i] = s[i];
-		
-	}
-	//construction(s);
+	this->init(s);
 }
 
 String::String(const String& s)
 {
-	string_len = s.string_len;
-	string_data = new char[string_len + 1];
-	capacity_len = string_len;
-
-	for (int i = 0; i != string_len; i++)
-	{
-		string_data[i] = s.string_data[i];
-	}
-	//construction(s.string_data);
+	this->init(s);
 }
-//void String::construction(const char* src)
-//{
-//	assert(src != NULL);
-//	int size = strlen(src) + 1;
-//	/*for (int i = 0; src[i] != '\0'; i++)
-//	{
-//		size++;
-//	}*/
-//	string_data = new char[size];
-//	memcpy(string_data, src, size * sizeof(char));
-//}
 
+String::~String()
+{
+	if (string_data != NULL)
+	{
+		delete[] string_data;
+	}
+}
+#pragma endregion
+
+#pragma region Assign, Append
 String& String::assign(const String& str)
 {
 	if (str.string_len > string_len) { 
 		string_len = str.string_len;       
 		string_data = new char[str.string_len]; 
 	} 
-	for (int i = 0; i != string_len; i++)
+	for (int i = 0; i != string_len; i++) 
 	{
 		string_data[i] = str.string_data[i];
 	}
@@ -107,7 +83,9 @@ String& String::append(const char* s)
 	String str(s);
 	return append(str);
 }
+#pragma endregion
 
+#pragma region 연산자 오버로딩
 String& String::operator=(const String& str)
 {
 	delete[] string_data;
@@ -236,14 +214,6 @@ std::istream& operator>>(std::istream& is, String& str)
 	return is;
 }
 
-String::~String()
-{
-	if (string_data != NULL)
-	{
-		delete[] string_data;
-	}
-}
-
 char& String::operator[](int index)
 {
 	try
@@ -260,7 +230,8 @@ char& String::operator[](int index)
 		std::cout << st;
 	}
 }
-
+#pragma endregion
+#pragma region 부가 함수
 const char String::print(bool show) // 수정한 print 함수
 {
 	if (show == true)
@@ -275,7 +246,6 @@ const char String::print(bool show) // 수정한 print 함수
 
 	//return *string_data;
 }
-
 int String::length()
 {
 	return string_len;
@@ -306,3 +276,39 @@ void String::shrink_to_fit()
 		string_len = capacity_len;
 	}
 }
+
+#pragma endregion
+#pragma region 생성자용 부함수
+void String::init()
+{
+	string_len = 0;
+	string_data = new char[string_len + 1];
+	string_data[0] = '\0';
+}
+void String::init(const char* in)
+{
+	int size = 0;
+	for (int i = 0; in[i] != '\0'; i++)
+	{
+		size++;
+	}
+	string_len = size;
+	capacity_len = string_len;
+	string_data = new char[this->string_len + 1];
+	for (int i = 0; i != string_len; i++)
+	{
+		string_data[i] = in[i];
+	}
+}
+void String::init(const String& in) noexcept
+{
+	string_len = in.string_len;
+	string_data = new char[string_len + 1];
+	capacity_len = string_len;
+
+	for (int i = 0; i != in.string_len; i++)
+	{
+		string_data[i] = in.string_data[i];
+	}
+}
+#pragma endregion

@@ -19,44 +19,52 @@ int main()
 	String string13 = string11 + string12;
 	String string14("hello");
 	String string15;
+	String stringTest;
 
 	std::cout << "==== String 1 ====" << std::endl;
 	std::cout << "capacity() Test : " << string1.capacity() << std::endl;
 	std::cout << "Length() Test " << string1.length() << std::endl;
 	std::cout << "size() Test : " << string1.size() << std::endl;
 
-	//========== Append ========== 
+	std::cout << "========== Append ==========" << std::endl;
 	string2.append("Append Test");
 	string2.print(true);
 
 	string3.append(string2);
 	string2.print(true);
 
-	//========== 연산자 오버로딩 (=) ==========
+	std::cout << "========== 연산자 오버로딩 (=) ==========" << std::endl;
 	string4 = string3;
 	string4.print(true); 
 
 	string5 = "String4 Test";
 	string5.print(true);
 
+	std::cout << "========== 연산자 오버로딩 (+) ==========" << std::endl;
+	stringTest = string4 + string3;
+	stringTest.print();
+
+	std::cout << "========== 연산자 오버로딩 (+=) ==========" << std::endl;
 	string5 += string4;
 	string5.print(true);
 
 	string6 += "EFG";
 	string6.print(true);
-	//========== 연산자 오버로딩 ([]) ==========
-	std::cout << string7[3];
+	string7 = "Assign test";
+	std::cout << "========== 연산자 오버로딩 ([]) ==========" << std::endl;
+	std::cout << string7[0] << std::endl;
 
-	//========== Assign ==========
-	string7.assign("asdf");
-	string7.print(true);
+	std::cout << "========== Assign ==========" << std::endl;
 
 	string7.assign(string6);
-	string7.print(true);
+	string7.print();
 	string7.capacity();
 
+	std::cout << "========== Shrink To Fit ==========" << std::endl;
 	string7.shrink_to_fit();
 	string7.capacity();
+	std::cout << "size : " << string7.size()<< std::endl;
+	std::cout << "length : " << string7.length();
 	
 	string10.print();
 	string13.print();
@@ -65,5 +73,6 @@ int main()
 	std::cout << "<cin 입력 테스트 >";
 	std::cin >>string15;
 	string15.print();
+
 	return 0;
 }
