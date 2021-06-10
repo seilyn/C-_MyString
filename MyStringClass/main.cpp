@@ -1,8 +1,11 @@
 #include "String.h"
+#include "Text.h"
 #include <iostream>
+#include <string>
 
 int main()
 {
+
 	String string1("C++ Programming");
 	String string2("string2");
 	String string3("String3");
@@ -73,6 +76,20 @@ int main()
 	std::cout << "<cin 입력 테스트 >";
 	std::cin >>string15;
 	string15.print();
+
+	std::cout << "========== Text Class ==========" << std::endl;
+	Text t1("hello");
+	std::cout << t1 << std::endl;
+	Text t2("A");
+	std::cout << "========== Text append ==========" << std::endl;
+	t1.append("a");
+	t2.append(t1);
+	String str1 = "hello";
+	std::cout << "========== Text 객체(String객체) ==========" << std::endl;
+	Text txt3(str1);
+	txt3.print();
+	std::cout << "========== <<연산자 오버로딩 ==========" << std::endl;
+	std::cout << txt3 << std::endl;
 
 	return 0;
 }

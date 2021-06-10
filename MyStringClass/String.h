@@ -13,8 +13,8 @@ public:
 #pragma region assign, append
 	String& assign(const String& str);
 	String& assign(const char* s);
-	String& append(const String& str);
-	String& append(const char* s);
+	virtual String& append(const String& str);
+	virtual String& append(const char* s);
 #pragma endregion
 
 #pragma region 연산자 오버로딩
@@ -38,9 +38,9 @@ public:
 #pragma endregion
 
 #pragma region 생성자용 부함수
-	void init();
-	void init(const char* in);
-	void init(const String& in) noexcept;
+	virtual void init();
+	virtual void init(const char* in);
+	virtual void init(const String& in) noexcept;
 #pragma endregion
 
 private:

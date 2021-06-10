@@ -1,28 +1,48 @@
 #include "String.h"
 #include <iostream>
+#include <string>
 
 #pragma region 持失切 & 社瑚切
 String::String()
 {
-	this->init();
+	// this->init();
+	string_len = 0;
+	string_data = NULL;
+	capacity_len = 0;
 }
 
 String::String(const char* s)
 {
-	this->init(s);
+	int len = 0;
+	for (int i = 0; s[i] != '\0'; i++)
+	{
+		len++;
+	}
+	string_len = len;
+	string_data = new char[string_len + 1];
+	capacity_len = string_len;
+
+	for (int i = 0; i != string_len; i++)
+	{
+		string_data[i] = s[i];
+
+	}
 }
 
 String::String(const String& s)
 {
-	this->init(s);
+	string_len = s.string_len;
+	string_data = new char[string_len + 1];
+	capacity_len = string_len;
+	for (int i = 0; i != string_len; i++)
+	{
+		string_data[i] = s.string_data[i];
+	}
 }
 
 String::~String()
 {
-	if (string_data != NULL)
-	{
-		delete[] string_data;
-	}
+	delete[] string_data;
 }
 #pragma endregion
 
@@ -180,7 +200,7 @@ String String::operator+(const char* s)
 	int temp_len = 0;
 	for (int i = 0; s[i] != '\0'; i++)
 	{
-		temp_len++;
+		temp_len++; 
 	}
 	char* string_data_temp = new char[string_len + temp_len + 1];
 	for (int i = 0; i != string_len; i++)
@@ -196,7 +216,6 @@ String String::operator+(const char* s)
 
 	return (*this);
 }
-
 std::ostream& operator<<(std::ostream& os, const String& str)
 {
 	for (int i = 0; i != str.string_len; i++)
@@ -205,7 +224,6 @@ std::ostream& operator<<(std::ostream& os, const String& str)
 	}
 	return os;
 }
-
 std::istream& operator>>(std::istream& is, String& str)
 {
 	char* string_data_temp = new char;
@@ -213,7 +231,6 @@ std::istream& operator>>(std::istream& is, String& str)
 	str = String(string_data_temp);
 	return is;
 }
-
 char& String::operator[](int index)
 {
 	try
@@ -294,7 +311,7 @@ void String::init(const char* in)
 	}
 	string_len = size;
 	capacity_len = string_len;
-	string_data = new char[this->string_len + 1];
+	string_data = new char[string_len + 1];
 	for (int i = 0; i != string_len; i++)
 	{
 		string_data[i] = in[i];
