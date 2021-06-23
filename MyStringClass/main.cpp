@@ -5,8 +5,18 @@
 
 int main()
 {
+	String str1 = "Hello";
+	Text text1 = "Text";
+	Text text2 = "ASD";
+	Text text3(str1);
+	std::cout << text1;
 
-	String string1("C++ Programming");
+	text1.append("test");
+	text1.print();
+	text2.print();
+	text3.print();
+
+	/*String string1("C++ Programming");
 	String string2("string2");
 	String string3("String3");
 	String string4("Hi");
@@ -89,7 +99,7 @@ int main()
 	Text txt3(str1);
 	txt3.print();
 	std::cout << "========== <<연산자 오버로딩 ==========" << std::endl;
-	std::cout << txt3 << std::endl;
+	std::cout << txt3 << std::endl;*/
 
 	return 0;
 }

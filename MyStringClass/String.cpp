@@ -5,39 +5,17 @@
 #pragma region 持失切 & 社瑚切
 String::String()
 {
-	// this->init();
-	string_len = 0;
-	string_data = NULL;
-	capacity_len = 0;
+	this->init();
 }
 
 String::String(const char* s)
 {
-	int len = 0;
-	for (int i = 0; s[i] != '\0'; i++)
-	{
-		len++;
-	}
-	string_len = len;
-	string_data = new char[string_len + 1];
-	capacity_len = string_len;
-
-	for (int i = 0; i != string_len; i++)
-	{
-		string_data[i] = s[i];
-
-	}
+	this->init(s);
 }
 
 String::String(const String& s)
 {
-	string_len = s.string_len;
-	string_data = new char[string_len + 1];
-	capacity_len = string_len;
-	for (int i = 0; i != string_len; i++)
-	{
-		string_data[i] = s.string_data[i];
-	}
+	this->init(s);
 }
 
 String::~String()

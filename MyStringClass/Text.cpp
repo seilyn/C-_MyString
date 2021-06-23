@@ -66,7 +66,7 @@ Text& Text::append(const char* s)
 	return append(txt);
 }
 Text& Text::append(const String& str)
-{
+{	
 	Text::append(str);
 	return (*this);
 }
